@@ -29,6 +29,8 @@
     </tr>
 </table>
 
+<label id="bottomMessage"></label>
+
 <script>
     var idx = -1;
     var gameid = -1;
@@ -92,6 +94,7 @@
                 document.getElementById("topMessage").innerHTML = obj.Msg[idx];
             }
         }
+        document.getElementById("bottomMessage").innerHTML = obj.Txt[idx];
     }
 
     function buttonclick(i) {

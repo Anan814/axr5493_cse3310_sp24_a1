@@ -1,3 +1,4 @@
+
 package uta.cse3310;
 
 public class Game {
@@ -5,7 +6,13 @@ public class Game {
     public PlayerType CurrentTurn;
     public PlayerType[] Button;
     public String[] Msg;
+    public String[] Txt;
     public int GameId;
+    public static int played = 0;
+    public static int xWin = 0;
+    public static int oWin = 0;
+    public static int draw = 0;
+    public static int concurrentGame = 0;
 
     Game() {
         Button = new PlayerType[9];
@@ -15,16 +22,24 @@ public class Game {
         }
 
         Msg = new String[2];
+        Txt = new String[2];
         Players = PlayerType.XPLAYER;
         CurrentTurn = PlayerType.NOPLAYER;
         Msg[0] = "Waiting for other player to join";
         Msg[1] = "";
+        Txt[0] = "Total played :" + played + "  Total won by X player: " + xWin + "  Total won by O player: " + oWin  +"   Total draw: " + draw + "  Concurrent games: " + concurrentGame;
+        Txt[1] = "Total played :" + played + "  Total won by X player: " + xWin + "  Total won by O player: " + oWin  +"  Total draw: " + draw + "  Concurrent games: " + concurrentGame;
     }
 
     public void StartGame() {
         // X player goes first. Because that is how it is.
+        //played++;
+        concurrentGame++;
         Msg[0] = "You are X. Your turn";
         Msg[1] = "You are O. Other players turn";
+        Txt[0] = "Total played :" + played + "  Total won by X player: " + xWin + "  Total won by O player: " + oWin  +"   Total draw: " + draw + "  Concurrent games: " + concurrentGame;
+        Txt[1] = "Total played :" + played + "  Total won by X player: " + xWin + "  Total won by O player: " + oWin  +"  Total draw: " + draw + "  Concurrent games: " + concurrentGame;
+    
         CurrentTurn = PlayerType.XPLAYER;
     }
 
@@ -99,18 +114,35 @@ public class Game {
             // Check for winners, losers, and a draw
 
             if (CheckBoard(PlayerType.XPLAYER)) {
+                xWin++;
+                concurrentGame--;
+                played++;
                 Msg[0] = "You Win!";
                 Msg[1] = "You Lose!";
+                
                 CurrentTurn = PlayerType.NOPLAYER;
             } else if (CheckBoard(PlayerType.OPLAYER)) {
+                oWin++;
+                concurrentGame--;
+                played++;
                 Msg[1] = "You Win!";
                 Msg[0] = "You Lose!";
+               
                 CurrentTurn = PlayerType.NOPLAYER;
             } else if (CheckDraw(U.PlayerIdx)) {
+                draw++;
+                concurrentGame--;
+                played++;
                 Msg[0] = "Draw";
                 Msg[1] = "Draw";
+                
                 CurrentTurn = PlayerType.NOPLAYER;
             }
+            //played++;
+            //concurrentGame--;
+            Txt[0] = "Total played :" + played + "  Total won by X player: " + xWin + "  Total won by O player: " + oWin  +"   Total draw: " + draw + "  Concurrent games: " + concurrentGame;
+            Txt[1] = "Total played :" + played + "  Total won by X player: " + xWin + "  Total won by O player: " + oWin  +"  Total draw: " + draw + "  Concurrent games: " + concurrentGame;
+
         }
     }
 
